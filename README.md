@@ -1,12 +1,9 @@
-# wp-plc-skeleton
+# wp-plc-connect
 
 ## Introduction
 
-This is a skeleton wordpress plugin for oneplace skeleton based modules.
-
-This plugin is based on a boilerplate that was accepted to be published on 
-wordpress.org - so if you don't mess up with the code too hard, it should 
-get approved on wordpress.org if you want to make it publicly available in wordpress.
+This is wordpress plugin to securely connect your wordpress website / blog
+to onePlace. This is the base plugin for almost every other onePlace Wordpress Plugin
 
 ## Installation
 
@@ -14,9 +11,9 @@ Upload latest stable .zip to wordpress in wp-admin
 
 Activate plugin
 
-have fun
+Go to OnePlace (in wp-admin menu)
 
-**WP PLC Connect needs to be activated and connected for this plugin to work**
+Enter your oneplace connection details
 
 ## Getting started
 
