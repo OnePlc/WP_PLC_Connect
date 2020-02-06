@@ -7,20 +7,20 @@
  * @link      https://1plc.ch/wordpress-plugins/connect
  */
 
-jQuery(function () {
+jQuery(document).ready(function($) {
     /**
      * Show first page
      */
-    jQuery('article.plc-admin-page-general').show();
+    $('article.plc-admin-page-general').show();
 
     /**
      * Ajax based navigation
      */
-    jQuery('nav.plc-admin-menu ul li a').on('click',function() {
-        var sPage = jQuery(this).attr('href').substring('#/'.length);
+    $('nav.plc-admin-menu ul li a').on('click',function() {
+        var sPage = $(this).attr('href').substring('#/'.length);
 
-        jQuery('article.plc-admin-page').hide();
-        jQuery('article.plc-admin-page-'+sPage).show();
+        $('article.plc-admin-page').hide();
+        $('article.plc-admin-page-'+sPage).show();
 
         return false;
     });
@@ -28,37 +28,40 @@ jQuery(function () {
     /**
      * Save Button
      */
-    jQuery('button.plc-admin-settings-save').on('click',function() {
+    $('button.plc-admin-settings-save').on('click',function() {
         // get page to save
-        var sPage = jQuery(this).attr('plc-admin-page');
+        var sPage = $(this).attr('plc-admin-page');
 
         // Load all fields for page
         var oData = {};
-        jQuery('.plc-admin-'+sPage).find('.plc-settings-value').each(function() {
-            var sField = jQuery(this).attr('name');
-            var sType = jQuery(this).attr('type');
+        $('.plc-admin-'+sPage).find('.plc-settings-value').each(function() {
+            var sField = $(this).attr('name');
+            var sType = $(this).attr('type');
             if(sType == 'checkbox') {
                 oData[sField] = 0;
-                if(jQuery(this).prop('checked')) {
+                if($(this).prop('checked')) {
                     oData[sField] = 1;
                 }
             } else {
-                oData[sField] = jQuery(this).val();
+                oData[sField] = $(this).val();
             }
         });
 
         // show ajax loader
-        jQuery('.plc-admin-alert-container').html('<img style="position:fixed;" src="/wp-content/plugins/wp-plc-connect/assets/img/ajax-loader.gif" />');
+        console.log('get plugin dir');
+        console.log(plcAdminControls.pluginUrl);
+        $('.plc-admin-alert-container').html('<img style="position:fixed;" src="'+plcAdminControls.pluginUrl+'/assets/img/ajax-loader.gif" />');
 
         // get nonce
-        var sWPNonce = jQuery('#_wpnonce').val();
+        var sWPNonce = $('#_wpnonce').val();
 
-        // save settings
-        jQuery.post('/wp-content/plugins/wp-plc-connect/includes/ajax/settingsupdate.php',{settings:oData,nonce:sWPNonce,basic_check:'wp_plc_setting'},function(retVal) {
-            // parse response
-            var oInfo = jQuery.parseJSON(retVal);
-            // show message
-            jQuery('.plc-admin-alert-container').html('<div class="plc-alert plc-alert-'+oInfo.state+'" style="position:fixed;">'+oInfo.message+'</div>');
+        // execute ajax
+        jQuery.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: {action: 'save_plcsettings',settings:oData,nonce:sWPNonce}
+        }).done(function( oInfo ) {
+            $('.plc-admin-alert-container').html('<div class="plc-alert plc-alert-'+oInfo.state+'" style="position:fixed;">'+oInfo.message+'</div>');
         });
 
         return false;

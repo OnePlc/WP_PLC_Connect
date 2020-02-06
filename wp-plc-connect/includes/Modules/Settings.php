@@ -39,6 +39,9 @@ final class Settings {
 
         # Add Plugin Languages
         add_action('plugins_loaded', [ $this, 'loadTextDomain' ] );
+
+        # Register Update Settings AJAX Hook
+        add_action('wp_ajax_save_plcsettings', [ $this, 'updateSettings' ] );
     }
 
     /**
@@ -65,14 +68,18 @@ final class Settings {
     /**
      * Enqueue Style and Javascript for Admin Panel
      *
+     * @param string hook
      * @since 1.0.0
      */
-    public function enqueueScripts() {
-        # add necessary javascript libs
-        wp_enqueue_script( 'plc-admin-controls', WPPLC_CONNECT_PUB_DIR.'/assets/js/plc-admin.js', [ 'jquery' ] );
-
+    public function enqueueScripts( $sHook ) {
         # add necessary css files
-        wp_enqueue_style( 'plc-admin-style', WPPLC_CONNECT_PUB_DIR.'/assets/css/plc-admin-style.css');
+        wp_enqueue_style( 'plc-admin-style', plugins_url('assets/css/plc-admin-style.css', WPPLC_CONNECT_PLUGIN_MAIN_FILE));
+
+        # add necessary js files
+        wp_enqueue_script( 'plc-admin-controls', plugins_url('assets/js/plc-admin.js', WPPLC_CONNECT_PLUGIN_MAIN_FILE), [ 'jquery' ] );
+        wp_localize_script('plc-admin-controls', 'plcAdminControls', [
+            'pluginUrl' => plugins_url('',WPPLC_CONNECT_PLUGIN_MAIN_FILE),
+        ]);
     }
 
     /**
@@ -122,5 +129,45 @@ final class Settings {
         static::$instance = new self();
         static::$instance->register();
         return true;
+    }
+
+    public function updateSettings() {
+        # only execute if started from our javascript
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $bRunUpdate = true;
+
+            # only run if everything is ok
+            if($bRunUpdate) {
+                # get settings and nonce
+                $aSettings = (isset($_REQUEST['settings'])) ? (array) $_REQUEST['settings'] : [];
+                # settings get sanitized before update_option see below
+                $aSettings = array_map( 'esc_attr', $aSettings );
+                $sWPNonce = wp_strip_all_tags($_REQUEST['nonce']);
+
+                # only save settings if we have valid nonce
+                if (wp_verify_nonce($sWPNonce, 'oneplace-settings-update')) {
+                    # update all settings
+                    foreach (array_keys($aSettings) as $sSetting) {
+                        # another basic check if the setting is really ours
+                        $bIsPlcSetting = stripos($sSetting, 'plc');
+                        if ($bIsPlcSetting === false) {
+                            # its not a field we sent
+                        } else {
+                            update_option($sSetting, str_replace(['\\'], [], sanitize_text_field($aSettings[$sSetting])));
+                        }
+                    }
+                    $aResponse = ['state' => 'success', 'message' => 'Settings saved successfully'];
+                } else {
+                    $aResponse = ['state' => 'error', 'message' => 'invalid wordpress nonce'];
+                }
+
+                # Response is JSON
+                header( "Content-Type: application/json" );
+                echo json_encode($aResponse);
+            }
+        }
+
+        //Don't forget to always exit in the ajax function.
+        exit();
     }
 }

@@ -11,7 +11,7 @@
  * Plugin Name: WP PLC Connect
  * Plugin URI:  https://wp.1plc.ch/wordpress-plugins/connect
  * Description: Connect your Wordpress installation to onePlace. Needed for other onePlace WP Plugins.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      onePlace
  * Author URI:  https://wp.1plc.ch
  * License:     GNU General Public License, version 2
@@ -25,10 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define global constants
-define( 'WPPLC_CONNECT_VERSION', '1.0.0' );
+define( 'WPPLC_CONNECT_VERSION', '1.0.1' );
 define( 'WPPLC_CONNECT_PLUGIN_MAIN_FILE', __FILE__ );
 define( 'WPPLC_CONNECT_PLUGIN_MAIN_DIR', __DIR__ );
-define( 'WPPLC_CONNECT_PUB_DIR', '/wp-content/plugins/wp-plc-connect' );
 
 /**
  * Handles plugin activation.

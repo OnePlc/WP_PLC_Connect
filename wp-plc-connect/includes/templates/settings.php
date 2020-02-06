@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="plc-settings-header-col header-col-second">
-                    <img src="<?=WPPLC_CONNECT_PUB_DIR?>/assets/img/icon.png" />
+                    <img src="<?=plugins_url('assets/img/icon.png', WPPLC_CONNECT_PLUGIN_MAIN_FILE)?>" />
                 </div>
                 <div class="plc-settings-header-col header-col-third">
                     <a href="https://t.me/OnePlc" target="_blank" title="Telegram Support">

@@ -41,6 +41,12 @@ Just install and activate. no setup or configuration yet.
 
 == Changelog ==
 
+= 1.0.1 =
+* no more hardcoded paths
+* ajax requests over admin-ajax.php
+* no more includes of core files
+* all input sanitized
+
 = 1.0.0 =
 * first public stable
 
