@@ -3,13 +3,13 @@
  * Plugin main file.
  *
  * @package   OnePlace\Connect
- * @copyright 2019 OnePlace
+ * @copyright 2020 OnePlace
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
  * @link      https://wp.1plc.ch
  *
  * @wordpress-plugin
  * Plugin Name: WP PLC Connect
- * Plugin URI:  https://wp.1plc.ch/wordpress-plugins/events
+ * Plugin URI:  https://wp.1plc.ch/wordpress-plugins/connect
  * Description: Connect your Wordpress installation to onePlace. Needed for other onePlace WP Plugins.
  * Version:     1.0.0
  * Author:      onePlace

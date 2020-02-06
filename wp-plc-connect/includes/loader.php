@@ -6,7 +6,7 @@
  * @package   OnePlace\Connect
  * @copyright 2019 Verein onePlace
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
- * @link      https://1plc.ch/wordpress-plugins/shop
+ * @link      https://1plc.ch/wordpress-plugins/connect
  */
 
 namespace OnePlace\Connect;

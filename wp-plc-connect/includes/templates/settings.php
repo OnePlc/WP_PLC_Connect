@@ -1,20 +1,30 @@
 <?php
+/**
+ * Settings Main Template
+ *
+ * @package   OnePlace\Connect
+ * @copyright 2019 Verein onePlace
+ * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
+ * @link      https://1plc.ch/wordpress-plugins/connect
+ */
 ?>
 <div class="plc-admin">
     <div class="plc-settings-wrapper">
         <!-- Header START -->
         <div class="plc-settings-header">
             <div class="plc-settings-header-main">
-                <div style="width:33%; text-align: left;">
+                <div class="plc-settings-header-col header-col-first">
                     <div class="plc-settings-header-main-title">
-                        WP PLC Connect <small>Version <?=WPPLC_CONNECT_VERSION?></small>
+                        WP PLC Connect <small>Version <?=(defined('WPPLC_CONNECT_VERSION')) ? WPPLC_CONNECT_VERSION : '(unknown)'?></small>
                     </div>
                 </div>
-                <div style="width:33%; text-align: center;">
-                    <img src="<?=WPPLC_CONNECT_PUB_DIR?>/assets/img/icon.png" style="max-height:42px;"/>
+                <div class="plc-settings-header-col header-col-second">
+                    <img src="<?=WPPLC_CONNECT_PUB_DIR?>/assets/img/icon.png" />
                 </div>
-                <div style="width:33%; text-align: right;">
-                    Need help?
+                <div class="plc-settings-header-col header-col-third">
+                    <a href="https://t.me/OnePlc" target="_blank" title="Telegram Support">
+                        <?=__('Need help?','wp-plc-connect')?>
+                    </a>
                 </div>
             </div>
         </div>
@@ -22,7 +32,7 @@
         <main class="plc-admin-main">
             <!-- Menu START -->
             <div class="plc-admin-menu-container">
-                <nav class="plc-admin-menu" style="width:70%; float:left;">
+                <nav class="plc-admin-menu">
                     <ul class="plc-admin-menu-list">
                         <li class="plc-admin-menu-list-item">
                             <a href="#/general">
@@ -31,16 +41,15 @@
                         </li>
                     </ul>
                 </nav>
-                <div class="plc-admin-alert-container" style="float:left; width:30%; padding:40px 0 40px 0;">
-
-                </div>
+                <div class="plc-admin-alert-container"></div>
             </div>
             <!-- Menu END -->
 
             <!-- Content START -->
-            <div class="plc-admin-page-container" style="width:100%; display: inline-block; float: left;">
+            <div class="plc-admin-page-container">
+                <?php wp_nonce_field( 'oneplace-settings-update' ); ?>
                 <?php
-                // Include Settings Pages
+                # Include Settings Pages
                 require_once __DIR__.'/partials/general.php';
                 ?>
             </div>

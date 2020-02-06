@@ -3,6 +3,39 @@ div.plc-admin {
     margin: 0 0 -65px -20px;
 }
 
+/* Admin Page Container */
+div.plc-admin-page-container {
+    width:100%; display: inline-block; float: left;
+}
+
+/* Alert Container */
+.plc-admin-alert-container {
+    float:left; width:30%; padding:40px 0 40px 0;
+}
+
+/* Admin Header Column */
+.plc-settings-header-col {
+    width: 33%;
+}
+
+/* Admin Header Column - First */
+.header-col-first {
+    text-align: left;
+}
+
+/* Admin Header Column - Second */
+.header-col-second {
+    text-align: center;
+}
+.header-col-second img {
+    max-height:42px;
+}
+
+/* Admin Header Column - Third */
+.header-col-third {
+    text-align: right;
+}
+
 /* Font Awesome Icon Selector */
 select.plc-icon-selector {
     font-family: 'FontAwesome', sans-serif;
@@ -43,6 +76,11 @@ main.plc-admin-main {
 /* Admin Panel Header Menu Container */
 div.plc-admin-menu-container {
     width:100%; padding-left:40px; display: inline-block; float:left; border-bottom:1px solid lightgray;
+}
+
+/* Admin Menu */
+nav.plc-admin-menu {
+    width:70%; float:left;
 }
 
 /* Admin Menu List */
@@ -169,6 +207,7 @@ input:checked + .plc-settings-slider:before {
 
 .plc-admin-page {
     display: none;
+    padding: 10px 40px 40px 40px;
 }
 
 .plc-admin-settings-field {
@@ -210,8 +249,6 @@ input:checked + .plc-settings-slider:before {
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
-
-
 
 .plc-admin-btn {
     display: inline-block;

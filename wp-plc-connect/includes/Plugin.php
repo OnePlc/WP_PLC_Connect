@@ -4,9 +4,9 @@
  * Plugin loader.
  *
  * @package   OnePlace\Connect
- * @copyright 2019 Verein onePlace
+ * @copyright 2020 Verein onePlace
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
- * @link      https://1plc.ch/wordpress-plugins/swissknife
+ * @link      https://1plc.ch/wordpress-plugins/connect
  */
 
 namespace OnePlace\Connect;
@@ -18,17 +18,16 @@ final class Plugin {
     /**
      * Main instance of the plugin.
      *
-     * @since 0.1-stable
      * @var Plugin|null
+     * @since 1.0.0
      */
     private static $instance = null;
 
     /**
      * Retrieves the main instance of the plugin.
      *
-     * @since 0.1-stable
-     *
      * @return Plugin Plugin main instance.
+     * @since 1.0.0
      */
     public static function instance() {
         return static::$instance;
@@ -37,20 +36,19 @@ final class Plugin {
     /**
      * Registers the plugin with WordPress.
      *
-     * @since 0.1-stable
+     * @since 1.0.0
      */
     public function register() {
-        // Enable Settings Page
+        # Enable Settings Page
         Modules\Settings::load();
     }
 
     /**
      * Loads the plugin main instance and initializes it.
      *
-     * @since 0.1-stable
-     *
      * @param string $main_file Absolute path to the plugin main file.
      * @return bool True if the plugin main instance could be loaded, false otherwise.
+     * @since 1.0.0
      */
     public static function load( $main_file ) {
         if ( null !== static::$instance ) {
@@ -61,34 +59,62 @@ final class Plugin {
         return true;
     }
 
+    /**
+     * Get Data from onePlace API Server
+     *
+     * @param $sUrl Url on API Server
+     * @param array $aParams extra parameters to send with
+     * @return bool|mixed false or json object
+     * @since 1.0.0
+     */
     public static function getDataFromAPI($sUrl,$aParams = []) {
+        # Get options
         $sHost = get_option('plcconnect_server_url');
         $sHostKey = get_option('plcconnect_server_key');
         $sHostToken = get_option('plcconnect_server_token');
 
+        # if host is not set - its likely after setup
         if($sHost == '') {
-            echo 'oneplace not connected!';
+            # todo: better error handling
+            #echo 'oneplace not connected!';
+            return false;
         } else {
+            # Add Extra Params if set
             $sExtraParams = '';
+            #$aRequestParams = ['authkey'=>$sHostKey,'authtoken'=>$sHostToken];
             if(count($aParams) > 0) {
                 foreach(array_keys($aParams) as $sParamKey) {
                     $sExtraParams .= '&'.strtolower($sParamKey).'='.$aParams[$sParamKey];
+                    #$aRequestParams[strtolower($sParamKey)] = $aParams[$sParamKey];
                 }
             }
-            $sJsonInfo = file_get_contents($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
-            $oCatInfo = json_decode($sJsonInfo);
+            # Get Data from API
+            $aResponse = wp_remote_get($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
+            if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
+                #$headers = $aResponse['headers']; // array of http header lines
+                $body    = $aResponse['body']; // use the content
+                $oJson = json_decode($body);
 
-            if(!is_object($oCatInfo)) {
-                echo 'invalid response';
+                # Return json
+                return $oJson;
             } else {
-                return $oCatInfo;
+                # todo: better error handling
+                #echo 'invalid response from API server';
+                return false;
             }
         }
 
         return false;
     }
 
+    /**
+     * Get CDN Server Address
+     *
+     * @return mixed
+     * @since 1.0.0
+     */
     public static function getCDNServerAddress() {
+        # Get Server URL (currently same as API Server, may change in future)
         $sHost = get_option('plcconnect_server_url');
         return $sHost;
     }
