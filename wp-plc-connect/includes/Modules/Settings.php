@@ -59,6 +59,7 @@ final class Settings {
         // Core Settings
         register_setting( 'wpplc_connect', 'plcconnect_server_url', false );
         register_setting( 'wpplc_connect', 'plcconnect_server_key', false );
+        register_setting( 'wpplc_connect', 'plcconnect_server_token', false );
     }
 
     /**

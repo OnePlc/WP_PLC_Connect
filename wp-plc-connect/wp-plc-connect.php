@@ -5,15 +5,15 @@
  * @package   OnePlace\Connect
  * @copyright 2019 OnePlace
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
- * @link      https://1plc.ch
+ * @link      https://wp.1plc.ch
  *
  * @wordpress-plugin
  * Plugin Name: WP PLC Connect
- * Plugin URI:  https://1plc.ch/wordpress-plugins/events
+ * Plugin URI:  https://wp.1plc.ch/wordpress-plugins/events
  * Description: Connect your Wordpress installation to onePlace. Needed for other onePlace WP Plugins.
  * Version:     1.0.0
  * Author:      onePlace
- * Author URI:  https://1plc.ch
+ * Author URI:  https://wp.1plc.ch
  * License:     GNU General Public License, version 2
  * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
  * Text Domain: wp-plc-connect
@@ -42,7 +42,7 @@ define( 'WPPLC_CONNECT_PUB_DIR', '/wp-content/plugins/wp-plc-connect' );
 function wpplcconnect_activate_plugin( $network_wide ) {
     if ( version_compare( PHP_VERSION, '5.4.0', '<' ) ) {
         wp_die(
-            esc_html__( 'WP PLC Connect requires PHP version 5.4.', 'wp-plc-connect' ),
+            esc_html__( 'WP PLC Events requires PHP version 5.4.', 'wp-plc-connect' ),
             esc_html__( 'Error Activating', 'wpplc-events' )
         );
     }

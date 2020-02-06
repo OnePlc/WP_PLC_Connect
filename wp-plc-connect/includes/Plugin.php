@@ -60,4 +60,36 @@ final class Plugin {
         static::$instance->register();
         return true;
     }
+
+    public static function getDataFromAPI($sUrl,$aParams = []) {
+        $sHost = get_option('plcconnect_server_url');
+        $sHostKey = get_option('plcconnect_server_key');
+        $sHostToken = get_option('plcconnect_server_token');
+
+        if($sHost == '') {
+            echo 'oneplace not connected!';
+        } else {
+            $sExtraParams = '';
+            if(count($aParams) > 0) {
+                foreach(array_keys($aParams) as $sParamKey) {
+                    $sExtraParams .= '&'.strtolower($sParamKey).'='.$aParams[$sParamKey];
+                }
+            }
+            $sJsonInfo = file_get_contents($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
+            $oCatInfo = json_decode($sJsonInfo);
+
+            if(!is_object($oCatInfo)) {
+                echo 'invalid response';
+            } else {
+                return $oCatInfo;
+            }
+        }
+
+        return false;
+    }
+
+    public static function getCDNServerAddress() {
+        $sHost = get_option('plcconnect_server_url');
+        return $sHost;
+    }
 }
