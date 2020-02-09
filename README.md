@@ -1,4 +1,8 @@
 # wp-plc-connect
+![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/wp-plc-connect)
+![WordPress Plugin Active Installs](https://img.shields.io/wordpress/plugin/installs/wp-plc-connect)
+![WordPress Plugin Rating](https://img.shields.io/wordpress/plugin/rating/wp-plc-connect)
+![GitHub Release Date](https://img.shields.io/github/release-date/oneplc/WP_PLC_Connect)
 
 ## Introduction
 
