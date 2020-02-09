@@ -58,7 +58,7 @@ enjoy
 == Feedback and support ==
 
 I would be happy to receive your feedback to improve this plugin.
-Please let me know through [support forums](https://discource.1plc.ch) if you like it.
+Please let me know through [support forums](https://discourse.1plc.ch) if you like it.
 
 Also you can contact me on my personal page [Verein onePlace](https://1plc.ch/) or even visit [Github of WP PLC Connect](https://github.com/OnePlc/WP_PLC_Connect) where you can find all the development code of this plugin.
 
