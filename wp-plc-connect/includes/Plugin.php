@@ -67,7 +67,7 @@ final class Plugin {
      * @return bool|mixed false or json object
      * @since 1.0.0
      */
-    public static function getDataFromAPI($sUrl,$aParams = []) {
+    public static function getDataFromAPI($sUrl,$aParams = [],$aBodyData = []) {
         # Get options
         $sHost = get_option('plcconnect_server_url');
         $sHostKey = get_option('plcconnect_server_key');
@@ -88,19 +88,46 @@ final class Plugin {
                     #$aRequestParams[strtolower($sParamKey)] = $aParams[$sParamKey];
                 }
             }
-            # Get Data from API
-            $aResponse = wp_remote_get($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
-            if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
-                #$headers = $aResponse['headers']; // array of http header lines
-                $body    = $aResponse['body']; // use the content
-                $oJson = json_decode($body);
+            if(count($aBodyData) > 0) {
+                $aResponse = wp_remote_post($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams, [
+                        'method' => 'POST',
+                        'timeout' => 45,
+                        'redirection' => 5,
+                        'httpversion' => '1.0',
+                        'blocking' => true,
+                        'headers' => [],
+                        'body' => $aBodyData,
+                        'cookies' => [],
+                    ]
+                );
+                if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
+                    #$headers = $aResponse['headers']; // array of http header lines
+                    $body    = $aResponse['body']; // use the content
+                    $oJson = json_decode($body);
 
-                # Return json
-                return $oJson;
+                    # Return json
+                    return $oJson;
+                } else {
+                    # todo: better error handling
+                    #echo 'invalid response from API server';
+                    return false;
+                }
             } else {
-                # todo: better error handling
-                #echo 'invalid response from API server';
-                return false;
+                # Get Data from API
+                $aResponse = wp_remote_get($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
+
+                if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
+                    #$headers = $aResponse['headers']; // array of http header lines
+                    $body    = $aResponse['body']; // use the content
+                    $oJson = json_decode($body);
+
+                    # Return json
+                    return $oJson;
+                } else {
+                    # todo: better error handling
+                    #echo 'invalid response from API server';
+                    return false;
+                }
             }
         }
 

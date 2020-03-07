@@ -41,6 +41,9 @@ Just install and activate. no setup or configuration yet.
 
 == Changelog ==
 
+= 1.0.2 =
+* extensions for api calls
+
 = 1.0.1 =
 * no more hardcoded paths
 * ajax requests over admin-ajax.php
@@ -51,6 +54,9 @@ Just install and activate. no setup or configuration yet.
 * first public stable
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+you can now do post requests to api
 
 = 1.0.0 =
 enjoy

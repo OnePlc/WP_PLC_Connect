@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define global constants
-define( 'WPPLC_CONNECT_VERSION', '1.0.1' );
+define( 'WPPLC_CONNECT_VERSION', '1.0.2' );
 define( 'WPPLC_CONNECT_PLUGIN_MAIN_FILE', __FILE__ );
 define( 'WPPLC_CONNECT_PLUGIN_MAIN_DIR', __DIR__ );
 
