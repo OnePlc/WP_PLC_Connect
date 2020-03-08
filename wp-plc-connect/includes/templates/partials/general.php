@@ -20,6 +20,11 @@
     $sAuthKey = get_option('plcconnect_server_key');
     $sAuthToken = get_option('plcconnect_server_token');
 
+    if(substr($sHost,strlen($sHost)-1) == '/') {
+        $sHost = substr($sHost,0,strlen($sHost)-1);
+        update_option('plcconnect_server_url', $sHost);
+    }
+
     # Lets try to connect if we have all necessary data
     if($sHost != '' && $sAuthKey != '' && $sAuthToken != '') {
         # Check API Response
@@ -40,6 +45,7 @@
                 if(isset($oJson->message)) {
                     echo '<p style="color:green;">Error '.$oJson->message.'</p>';
                 } else {
+                    var_dump($oJson);
                     echo '<p style="color:green;">Unknown Error while connecting to API</p>';
                 }
             }
