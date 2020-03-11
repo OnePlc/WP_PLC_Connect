@@ -46,7 +46,10 @@ jQuery(document).ready(function($) {
                 oData[sField] = $(this).val();
             }
         });
-
+        // Support for wp_editor field
+        if(tinyMCE.activeEditor) {
+            oData[tinyMCE.activeEditor.id] = tinyMCE.activeEditor.getContent();
+        }
         // show ajax loader
         console.log('get plugin dir');
         console.log(plcAdminControls.pluginUrl);

@@ -131,6 +131,13 @@ final class Settings {
         return true;
     }
 
+    /**
+     * Update onePlace Wordpress Settings
+     *
+     * Used by all WP PLC Plugins
+     *
+     * @since 1.0.2
+     */
     public function updateSettings() {
         # only execute if started from our javascript
         if($_SERVER['REQUEST_METHOD'] === 'POST') {

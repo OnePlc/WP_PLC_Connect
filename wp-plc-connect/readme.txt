@@ -41,6 +41,10 @@ Just install and activate. no setup or configuration yet.
 
 == Changelog ==
 
+= 1.0.3 =
+* better error handling
+* support for wp_editor fields in onePlace Plugin Settings
+
 = 1.0.2 =
 * extensions for api calls
 
@@ -54,6 +58,10 @@ Just install and activate. no setup or configuration yet.
 * first public stable
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+better error handling for failed requests if you
+are a logged in user
 
 = 1.0.2 =
 you can now do post requests to api

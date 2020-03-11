@@ -100,6 +100,7 @@ final class Plugin {
                         'cookies' => [],
                     ]
                 );
+                //echo $aResponse['body'];
                 if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
                     #$headers = $aResponse['headers']; // array of http header lines
                     $body    = $aResponse['body']; // use the content
@@ -110,23 +111,29 @@ final class Plugin {
                 } else {
                     # todo: better error handling
                     #echo 'invalid response from API server';
-                    return false;
+                    return $aResponse;
                 }
             } else {
                 # Get Data from API
                 $aResponse = wp_remote_get($sHost . $sUrl . '?authkey=' . $sHostKey . '&authtoken=' . $sHostToken.$sExtraParams);
-
+                //echo $aResponse['body'];
                 if ( is_array( $aResponse ) && ! is_wp_error( $aResponse ) ) {
                     #$headers = $aResponse['headers']; // array of http header lines
                     $body    = $aResponse['body']; // use the content
                     $oJson = json_decode($body);
 
-                    # Return json
-                    return $oJson;
+                    if(is_object($oJson)) {
+                        # Return json
+                        return $oJson;
+                    } else {
+                        return $aResponse;
+                    }
+
+
                 } else {
                     # todo: better error handling
                     #echo 'invalid response from API server';
-                    return false;
+                    return $aResponse;
                 }
             }
         }
