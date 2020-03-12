@@ -106,8 +106,12 @@ final class Plugin {
                     $body    = $aResponse['body']; // use the content
                     $oJson = json_decode($body);
 
-                    # Return json
-                    return $oJson;
+                    if(is_object($oJson)) {
+                        # Return json
+                        return $oJson;
+                    } else {
+                        return $aResponse;
+                    }
                 } else {
                     # todo: better error handling
                     #echo 'invalid response from API server';
